@@ -1,3 +1,5 @@
+alert("script.js работает");
+
 let selectedCountries = [];
 let selectedCities = {};
 let selectedSeason = "";
