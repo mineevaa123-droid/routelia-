@@ -1,5 +1,3 @@
-console.log("НОВЫЙ SCRIPT");
-
 let selectedCountries = [];
 let selectedCities = {};
 let selectedSeason = "";
@@ -104,26 +102,47 @@ const allowedDepartureCities = [
 
 
 /* =========================
-   ПЕРЕХОД К ПЛАНИРОВЩИКУ
+   ПЛАНИРОВЩИК
 ========================= */
 
 function openPlanner() {
-  const planner = document.getElementById("planner");
+
+  const planner =
+    document.getElementById("planner");
 
   if (!planner) {
-    alert("Не найден блок планировщика.");
+
+    alert(
+      "Планировщик не найден. Проверь id=\"planner\" в index.html"
+    );
+
     return;
   }
 
-  planner.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
+  planner.style.display = "block";
+
+  setTimeout(function() {
+
+    planner.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+  }, 100);
 }
 
 
 function closePlanner() {
-  openPlanner();
+
+  const planner =
+    document.getElementById("planner");
+
+  if (!planner) return;
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
 
@@ -136,7 +155,9 @@ function toggleCountry(button, country) {
   if (selectedCountries.includes(country)) {
 
     selectedCountries =
-      selectedCountries.filter(c => c !== country);
+      selectedCountries.filter(
+        c => c !== country
+      );
 
     delete selectedCities[country];
 
@@ -224,6 +245,8 @@ function updateCitySections() {
       button.className =
         "city-button";
 
+      button.type = "button";
+
       button.textContent =
         city;
 
@@ -234,19 +257,21 @@ function updateCitySections() {
       ) {
 
         button.classList.add("selected");
-
       }
 
 
-      button.onclick = function() {
+      button.addEventListener(
+        "click",
+        function() {
 
-        toggleCity(
-          country,
-          city,
-          button
-        );
+          toggleCity(
+            country,
+            city,
+            button
+          );
 
-      };
+        }
+      );
 
 
       grid.appendChild(button);
@@ -256,13 +281,6 @@ function updateCitySections() {
 
     section.appendChild(grid);
 
-
-    /*
-      Оставляем пустой блок,
-      чтобы старый CSS не ломался.
-      Сам выбранный город теперь
-      показывается кнопкой.
-    */
 
     const selected =
       document.createElement("div");
@@ -287,7 +305,6 @@ function toggleCity(country, city, button) {
   if (!selectedCities[country]) {
 
     selectedCities[country] = [];
-
   }
 
 
@@ -307,9 +324,7 @@ function toggleCity(country, city, button) {
     selectedCities[country].push(city);
 
     button.classList.add("selected");
-
   }
-
 
   updateSeasonInfo();
 }
@@ -332,9 +347,7 @@ function resetCountries() {
 
 
   updateSelectedCountries();
-
   updateCitySections();
-
   updateSeasonInfo();
 }
 
@@ -379,7 +392,6 @@ function selectSeason(season) {
       ) {
 
         button.classList.add("selected");
-
       }
 
     });
@@ -449,7 +461,8 @@ function updateSeasonInfo() {
       ) {
 
         text =
-          seasonInfo[country][city][selectedSeason];
+          seasonInfo[country][city]
+            [selectedSeason];
 
       }
 
@@ -458,7 +471,6 @@ function updateSeasonInfo() {
 
         text =
           "Информация о сезоне пока недоступна.";
-
       }
 
 
@@ -526,14 +538,12 @@ function selectBudget(mode) {
     if (button) {
 
       button.classList.add("selected");
-
     }
 
 
     if (input) {
 
       input.classList.add("active");
-
     }
 
   } else {
@@ -544,14 +554,12 @@ function selectBudget(mode) {
     if (button) {
 
       button.classList.add("selected");
-
     }
 
 
     if (input) {
 
       input.classList.remove("active");
-
     }
 
   }
@@ -559,7 +567,7 @@ function selectBudget(mode) {
 
 
 /* =========================
-   ПРОВЕРКА ГОРОДА
+   ПРОВЕРКА ОТПРАВЛЕНИЯ
 ========================= */
 
 function validateDepartureCity(value) {
@@ -570,13 +578,12 @@ function validateDepartureCity(value) {
       .toLowerCase()
       .replace(/\s+/g, " ");
 
-
   return allowedDepartureCities.includes(city);
 }
 
 
 /* =========================
-   СОЗДАНИЕ МАРШРУТА
+   СОЗДАНИЕ ПОЕЗДКИ
 ========================= */
 
 function createTrip() {
@@ -636,7 +643,6 @@ function createTrip() {
 
       return;
     }
-
   }
 
 
@@ -694,7 +700,6 @@ function createTrip() {
 
       return;
     }
-
   }
 
 
@@ -715,7 +720,6 @@ function createTrip() {
       behavior: "smooth",
       block: "start"
     });
-
   }
 }
 
@@ -795,7 +799,7 @@ function createRoute(days) {
 
 
 /* =========================
-   РАСЧЁТ СТОИМОСТИ
+   СТОИМОСТЬ
 ========================= */
 
 function createCosts(days) {
@@ -838,7 +842,6 @@ function createCosts(days) {
       countryCount === 1
         ? 180
         : 280;
-
   }
 
 
@@ -890,72 +893,43 @@ function createCosts(days) {
     fun;
 
 
-  const flightCost =
-    document.getElementById("flightCost");
+  const elements = {
 
-  if (flightCost) {
-    flightCost.textContent =
-      "€" + flight;
-  }
+    flightCost: flight,
+    hotelCost: hotel,
+    transportCost: transport,
+    foodCost: food,
+    funCost: fun,
+    totalCost: total
 
-
-  const hotelCost =
-    document.getElementById("hotelCost");
-
-  if (hotelCost) {
-    hotelCost.textContent =
-      "€" + hotel;
-  }
+  };
 
 
-  const transportCost =
-    document.getElementById("transportCost");
+  Object.keys(elements).forEach(id => {
 
-  if (transportCost) {
-    transportCost.textContent =
-      "€" + transport;
-  }
+    const element =
+      document.getElementById(id);
 
+    if (element) {
 
-  const foodCost =
-    document.getElementById("foodCost");
+      element.textContent =
+        "€" + elements[id];
 
-  if (foodCost) {
-    foodCost.textContent =
-      "€" + food;
-  }
-
-
-  const funCost =
-    document.getElementById("funCost");
-
-  if (funCost) {
-    funCost.textContent =
-      "€" + fun;
-  }
-
-
-  const totalCost =
-    document.getElementById("totalCost");
-
-  if (totalCost) {
-    totalCost.textContent =
-      "€" + total;
-  }
+    }
+  });
 
 
   const budgetResult =
     document.getElementById("budgetResult");
 
 
-  if (
-    budgetMode === "have" &&
-    budgetResult
-  ) {
+  if (!budgetResult) return;
+
+
+  if (budgetMode === "have") {
 
     const budgetElement =
       document.getElementById("budget");
-
 
     const budget =
       budgetElement
@@ -975,7 +949,7 @@ function createCosts(days) {
 
     }
 
-  } else if (budgetResult) {
+  } else {
 
     budgetResult.textContent =
       "Routelia рассчитала примерный бюджет поездки.";
@@ -1086,7 +1060,6 @@ function getDayWord(days) {
   ) {
 
     return "день";
-
   }
 
 
@@ -1100,7 +1073,6 @@ function getDayWord(days) {
   ) {
 
     return "дня";
-
   }
 
 
@@ -1117,9 +1089,7 @@ function toggleAssistant() {
   const box =
     document.getElementById("assistantBox");
 
-
   if (!box) return;
-
 
   box.classList.toggle("active");
 }
@@ -1134,9 +1104,7 @@ document.addEventListener(
   function() {
 
     updateSelectedCountries();
-
     updateCitySections();
-
     updateSeasonInfo();
 
   }
