@@ -1,3 +1,5 @@
+console.log("НОВЫЙ SCRIPT");
+
 let selectedCountries = [];
 let selectedCities = {};
 let selectedSeason = "";
