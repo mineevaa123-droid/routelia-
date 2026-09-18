@@ -300,6 +300,12 @@ function createCitySection(country) {
   }
 
 
+  /*
+    Подсказка оставляем,
+    но больше НЕ показываем
+    "Выбрано: город".
+  */
+
   const selected =
     document.createElement("div");
 
@@ -357,6 +363,11 @@ function updateSelectedCities(country) {
   const cities =
     selectedCities[country];
 
+  /*
+    Если город выбран — ничего не выводим.
+    Поэтому "Выбрано: Барселона" исчезает.
+  */
+
   if (!cities.length) {
 
     element.textContent =
@@ -365,8 +376,7 @@ function updateSelectedCities(country) {
     return;
   }
 
-  element.textContent =
-    "Выбрано: " + cities.join(", ");
+  element.textContent = "";
 }
 
 
@@ -564,15 +574,16 @@ function selectBudget(mode) {
       button.classList.remove("selected");
     });
 
-  document
-    .getElementById(
+  const button =
+    document.getElementById(
       mode === "have"
         ? "budgetHave"
-        : mode === "calculate"
-          ? "budgetCalculate"
-          : "budgetUnknown"
-    )
-    .classList.add("selected");
+        : "budgetCalculate"
+    );
+
+  if (button) {
+    button.classList.add("selected");
+  }
 
   document
     .getElementById("budgetInput")
@@ -953,16 +964,10 @@ function createTrip() {
         "Бюджет близок к ориентировочной стоимости поездки. Лучше оставить небольшой запас.";
     }
 
-  } else if (budgetMode === "calculate") {
-
-    budgetResult.textContent =
-      "Расчёт выполнен без заданного бюджета — используй сумму как ориентир.";
-
   } else {
 
     budgetResult.textContent =
-      "Если пока нет точного бюджета, используй этот диапазон как ориентир при планировании.";
-
+      "Расчёт выполнен без заданного бюджета — используй сумму как ориентир.";
   }
 
 
