@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+вы<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -407,29 +407,36 @@
         behavior: "smooth"
       });
     }
-    function createTrip() {
-      const from = document.getElementById("from").value.trim();
-      const to = document.getElementById("to").value.trim();
-      const days = document.getElementById("days").value;
-      const style = document.getElementById("style").value;
-      if (!from || !to || !days) {
-        alert("Заполни все поля ✦");
-        return;
-      }
-      if (days > 90) {
-        alert("Максимальная продолжительность поездки — 90 дней.");
-        return;
-      }
-      document.getElementById("routeFrom").textContent = from;
-      document.getElementById("routeTo").textContent = to;
-      document.getElementById("resultText").textContent =
-        "Поездка на " + days + " дней · стиль: " + style +
-        ". Здесь позже Routelia сможет показать подробный маршрут, бюджет, транспорт и информацию по визе.";
-      document.getElementById("result").classList.add("active");
-      document.getElementById("result").scrollIntoView({
-        behavior: "smooth"
-      });
-    }
+      function createTrip() {
+  const from = document.getElementById("from").value.trim();
+  const to = document.getElementById("to").value.trim();
+  const days = document.getElementById("days").value;
+  const style = document.getElementById("style").value;
+
+  if (!from || !to || !days) {
+    alert("Заполни все поля");
+    return;
+  }
+
+  if (days > 90) {
+    alert("Максимальная продолжительность поездки — 90 дней");
+    return;
+  }
+
+  document.getElementById("routeFrom").textContent = from;
+  document.getElementById("routeTo").textContent = to;
+
+  document.getElementById("resultText").textContent =
+    "Поездка на " + days + " дней · стиль: " + style +
+    ". Routelia поможет спланировать маршрут, транспорт, места и бюджет.";
+
+  document.getElementById("result").classList.add("show");
+
+  document.getElementById("result").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+    
     function toggleAssistant() {
       document.getElementById("assistantBox").classList.toggle("active");
     }
