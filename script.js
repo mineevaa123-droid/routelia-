@@ -12,71 +12,61 @@ const seasonNames = {
 
 const cityData = {
   "Германия": {
-    "Берлин":  { price: 75 },
-    "Мюнхен":  { price: 85 },
-    "Кёльн":   { price: 70 },
-    "Гамбург":  { price: 75 }
+    "Берлин": { price: 75 },
+    "Мюнхен": { price: 85 },
+    "Кёльн": { price: 70 },
+    "Гамбург": { price: 75 }
   },
-
   "Франция": {
-    "Париж":       { price: 100 },
-    "Ницца":       { price: 95 },
-    "Лион":        { price: 75 },
-    "Страсбург":   { price: 70 }
+    "Париж": { price: 100 },
+    "Ницца": { price: 95 },
+    "Лион": { price: 75 },
+    "Страсбург": { price: 70 }
   },
-
   "Испания": {
     "Барселона": { price: 90 },
-    "Мадрид":    { price: 80 },
-    "Валенсия":  { price: 70 },
-    "Севилья":   { price: 65 }
+    "Мадрид": { price: 80 },
+    "Валенсия": { price: 70 },
+    "Севилья": { price: 65 }
   },
-
   "Италия": {
-    "Рим":       { price: 90 },
-    "Милан":     { price: 95 },
+    "Рим": { price: 90 },
+    "Милан": { price: 95 },
     "Флоренция": { price: 85 },
-    "Венеция":   { price: 100 }
+    "Венеция": { price: 100 }
   },
-
   "Нидерланды": {
-    "Амстердам":   { price: 100 },
-    "Роттердам":   { price: 80 },
-    "Гаага":       { price: 80 },
-    "Утрехт":      { price: 85 }
+    "Амстердам": { price: 100 },
+    "Роттердам": { price: 80 },
+    "Гаага": { price: 80 },
+    "Утрехт": { price: 85 }
   },
-
   "Австрия": {
-    "Вена":       { price: 80 },
-    "Зальцбург":  { price: 85 },
-    "Инсбрук":    { price: 90 }
+    "Вена": { price: 80 },
+    "Зальцбург": { price: 85 },
+    "Инсбрук": { price: 90 }
   },
-
   "Чехия": {
-    "Прага":        { price: 65 },
-    "Брно":         { price: 55 },
+    "Прага": { price: 65 },
+    "Брно": { price: 55 },
     "Чески-Крумлов": { price: 60 }
   },
-
   "Португалия": {
     "Лиссабон": { price: 75 },
-    "Порту":    { price: 65 },
-    "Фару":     { price: 60 }
+    "Порту": { price: 65 },
+    "Фару": { price: 60 }
   },
-
   "Швейцария": {
-    "Цюрих":   { price: 130 },
-    "Женева":  { price: 125 },
-    "Люцерн":  { price: 120 }
+    "Цюрих": { price: 130 },
+    "Женева": { price: 125 },
+    "Люцерн": { price: 120 }
   },
-
   "Бельгия": {
     "Брюссель": { price: 80 },
-    "Брюгге":   { price: 85 },
+    "Брюгге": { price: 85 },
     "Антверпен": { price: 75 }
   }
 };
-
 
 const allowedDepartureCities = [
   "новосибирск",
@@ -103,16 +93,18 @@ const allowedDepartureCities = [
 
 
 function openPlanner() {
-  document.getElementById("planner").scrollIntoView({
-    behavior: "smooth"
-  });
+  const planner = document.getElementById("planner");
+
+  if (planner) {
+    planner.scrollIntoView({
+      behavior: "smooth"
+    });
+  }
 }
 
 
 function closePlanner() {
-  document.getElementById("planner").scrollIntoView({
-    behavior: "smooth"
-  });
+  openPlanner();
 }
 
 
@@ -146,9 +138,13 @@ function updateSelectedCountries() {
   const element =
     document.getElementById("selectedCountries");
 
+  if (!element) return;
+
   if (!selectedCountries.length) {
+
     element.textContent =
       "Сначала выбери страны";
+
     return;
   }
 
@@ -162,6 +158,8 @@ function updateCitySections() {
 
   const container =
     document.getElementById("citySections");
+
+  if (!container) return;
 
   container.innerHTML = "";
 
@@ -200,8 +198,9 @@ function updateCitySections() {
         button.classList.add("selected");
       }
 
-      button.onclick = () =>
+      button.onclick = function() {
         toggleCity(country, city, button);
+      };
 
       grid.appendChild(button);
     });
@@ -211,15 +210,15 @@ function updateCitySections() {
     const selected =
       document.createElement("div");
 
-    selected.className = "selected-cities";
+    selected.className =
+      "selected-cities";
+
     selected.id =
       "selected-" + country;
 
     section.appendChild(selected);
 
     container.appendChild(section);
-
-    updateSelectedCities(country);
   });
 }
 
@@ -242,35 +241,24 @@ function toggleCity(country, city, button) {
   } else {
 
     selectedCities[country].push(city);
+
     button.classList.add("selected");
   }
 
-  updateSelectedCities(country);
   updateSeasonInfo();
-}
-
-
-function updateSelectedCities(country) {
-
-  const element =
-    document.getElementById("selected-" + country);
-
-  if (!element) return;
-
-  element.textContent = "";
 }
 
 
 function resetCountries() {
 
   selectedCountries = [];
-  selectedCities = [];
+  selectedCities = {};
 
   document
     .querySelectorAll(".country-button")
-    .forEach(button =>
-      button.classList.remove("selected")
-    );
+    .forEach(button => {
+      button.classList.remove("selected");
+    });
 
   updateSelectedCountries();
   updateCitySections();
@@ -284,29 +272,30 @@ function selectSeason(season) {
 
   document
     .querySelectorAll(".season-button")
-    .forEach(button =>
-      button.classList.remove("selected")
-    );
+    .forEach(button => {
+      button.classList.remove("selected");
+    });
 
-  const buttons =
-    document.querySelectorAll(".season-button");
-
-  const names = {
-    spring: "🌸 Весна",
-    summer: "☀️ Лето",
-    autumn: "🍂 Осень",
-    winter: "❄️ Зима"
+  const seasonWords = {
+    spring: "Весна",
+    summer: "Лето",
+    autumn: "Осень",
+    winter: "Зима"
   };
 
-  buttons.forEach(button => {
+  document
+    .querySelectorAll(".season-button")
+    .forEach(button => {
 
-    if (button.textContent.includes(
-      names[season].split(" ")[1]
-    )) {
-      button.classList.add("selected");
-    }
+      if (
+        button.textContent.includes(
+          seasonWords[season]
+        )
+      ) {
+        button.classList.add("selected");
+      }
 
-  });
+    });
 
   updateSeasonInfo();
 }
@@ -356,12 +345,25 @@ function updateSeasonInfo() {
 
     cities.forEach(city => {
 
-      const text =
-        seasonInfo[country] &&
-        seasonInfo[country][city] &&
-        seasonInfo[country][city][selectedSeason];
+      let text = "";
 
-      if (!text) return;
+      if (
+        typeof seasonInfo !== "undefined" &&
+        seasonInfo[country] &&
+        seasonInfo[country][city]
+      ) {
+
+        text =
+          seasonInfo[country][city][selectedSeason];
+
+      }
+
+      if (!text) {
+
+        text =
+          "Информация о сезоне пока недоступна.";
+
+      }
 
       blocks.push(
         "<strong>" +
@@ -376,13 +378,16 @@ function updateSeasonInfo() {
 
   element.innerHTML =
     "<div class='season-result'>" +
+
       "<div class='season-result-title'>" +
         "Особенности: " +
         seasonNames[selectedSeason] +
       "</div>" +
+
       blocks.join(
         "<div class='season-divider'></div>"
       ) +
+
     "</div>";
 }
 
@@ -393,9 +398,12 @@ function selectBudget(mode) {
 
   document
     .querySelectorAll(".budget-button")
-    .forEach(button =>
-      button.classList.remove("selected")
-    );
+    .forEach(button => {
+      button.classList.remove("selected");
+    });
+
+  const input =
+    document.getElementById("budgetInput");
 
   if (mode === "have") {
 
@@ -403,9 +411,9 @@ function selectBudget(mode) {
       .getElementById("budgetHave")
       .classList.add("selected");
 
-    document
-      .getElementById("budgetInput")
-      .classList.add("active");
+    if (input) {
+      input.classList.add("active");
+    }
 
   } else {
 
@@ -413,9 +421,9 @@ function selectBudget(mode) {
       .getElementById("budgetCalculate")
       .classList.add("selected");
 
-    document
-      .getElementById("budgetInput")
-      .classList.remove("active");
+    if (input) {
+      input.classList.remove("active");
+    }
   }
 }
 
@@ -434,11 +442,18 @@ function validateDepartureCity(value) {
 
 function createTrip() {
 
+  const fromElement =
+    document.getElementById("from");
+
+  const daysElement =
+    document.getElementById("days");
+
   const from =
-    document.getElementById("from").value;
+    fromElement ? fromElement.value : "";
 
   const days =
-    Number(document.getElementById("days").value);
+    daysElement ? Number(daysElement.value) : 0;
+
 
   if (!validateDepartureCity(from)) {
 
@@ -449,12 +464,16 @@ function createTrip() {
     return;
   }
 
+
   if (!selectedCountries.length) {
 
-    alert("Выбери хотя бы одну страну.");
+    alert(
+      "Выбери хотя бы одну страну."
+    );
 
     return;
   }
+
 
   for (const country of selectedCountries) {
 
@@ -472,6 +491,7 @@ function createTrip() {
     }
   }
 
+
   if (!days || days < 1 || days > 90) {
 
     alert(
@@ -481,44 +501,63 @@ function createTrip() {
     return;
   }
 
+
   if (!selectedSeason) {
 
-    alert("Выбери сезон.");
+    alert(
+      "Выбери сезон."
+    );
 
     return;
   }
+
 
   if (!budgetMode) {
 
-    alert("Выбери вариант бюджета.");
+    alert(
+      "Выбери вариант бюджета."
+    );
 
     return;
   }
 
+
   if (budgetMode === "have") {
 
+    const budgetElement =
+      document.getElementById("budget");
+
     const budget =
-      Number(
-        document.getElementById("budget").value
-      );
+      budgetElement ?
+      Number(budgetElement.value) :
+      0;
 
     if (!budget || budget < 1) {
 
-      alert("Укажи свой бюджет.");
+      alert(
+        "Укажи свой бюджет."
+      );
 
       return;
     }
   }
 
+
   createRoute(days);
   createCosts(days);
   createCountryPlan();
 
-  document
-    .getElementById("result")
-    .scrollIntoView({
+
+  const result =
+    document.getElementById("result");
+
+  if (result) {
+
+    result.scrollIntoView({
       behavior: "smooth"
     });
+
+  }
 }
 
 
@@ -527,42 +566,55 @@ function createRoute(days) {
   const route =
     document.getElementById("route");
 
+  if (!route) return;
+
   route.innerHTML = "";
 
-  selectedCountries.forEach((country, index) => {
+  selectedCountries.forEach(
+    (country, index) => {
 
-    const block =
-      document.createElement("div");
+      const block =
+        document.createElement("div");
 
-    block.className = "route-item";
+      block.className =
+        "route-item";
 
-    block.innerHTML =
-      "<div class='route-number'>" +
-      String(index + 1).padStart(2, "0") +
-      "</div>" +
+      block.innerHTML =
+        "<div class='route-number'>" +
+        String(index + 1).padStart(2, "0") +
+        "</div>" +
 
-      "<div>" +
-      "<strong>" +
-      country +
-      "</strong>" +
+        "<div>" +
 
-      "<p>" +
-      selectedCities[country].join(" · ") +
-      "</p>" +
+        "<strong>" +
+        country +
+        "</strong>" +
 
-      "</div>";
+        "<p>" +
+        selectedCities[country].join(" · ") +
+        "</p>" +
 
-    route.appendChild(block);
-  });
+        "</div>";
 
-  document.getElementById("resultText").textContent =
-    "Поездка на " +
-    days +
-    " " +
-    getDayWord(days) +
-    " · " +
-    selectedCountries.join(" → ") +
-    ".";
+      route.appendChild(block);
+    }
+  );
+
+
+  const resultText =
+    document.getElementById("resultText");
+
+  if (resultText) {
+
+    resultText.textContent =
+      "Поездка на " +
+      days +
+      " " +
+      getDayWord(days) +
+      " · " +
+      selectedCountries.join(" → ") +
+      ".";
+  }
 }
 
 
@@ -576,24 +628,31 @@ function createCosts(days) {
       .flat()
       .length;
 
-  let flight;
 
-  if (
+  const from =
     document
       .getElementById("from")
       .value
-      .toLowerCase()
-      .includes("новосибирск")
-  ) {
+      .toLowerCase();
+
+
+  let flight;
+
+  if (from.includes("новосибирск")) {
 
     flight =
-      countryCount === 1 ? 350 : 450;
+      countryCount === 1
+        ? 350
+        : 450;
 
   } else {
 
     flight =
-      countryCount === 1 ? 180 : 280;
+      countryCount === 1
+        ? 180
+        : 280;
   }
+
 
   let hotelPerNight = 0;
 
@@ -603,8 +662,10 @@ function createCosts(days) {
 
       hotelPerNight +=
         cityData[country][city].price;
+
     });
   });
+
 
   const hotel =
     Math.round(
@@ -612,15 +673,19 @@ function createCosts(days) {
       (days / cityCount)
     );
 
+
   const transport =
     days *
     (countryCount > 1 ? 18 : 12);
 
+
   const food =
     days * 35;
 
+
   const fun =
     days * 18;
+
 
   const total =
     flight +
@@ -628,6 +693,7 @@ function createCosts(days) {
     transport +
     food +
     fun;
+
 
   document.getElementById("flightCost").textContent =
     "€" + flight;
@@ -647,8 +713,10 @@ function createCosts(days) {
   document.getElementById("totalCost").textContent =
     "€" + total;
 
+
   const budgetResult =
     document.getElementById("budgetResult");
+
 
   if (budgetMode === "have") {
 
@@ -666,12 +734,14 @@ function createCosts(days) {
 
       budgetResult.textContent =
         "Ориентировочная стоимость выше указанного бюджета.";
+
     }
 
   } else {
 
     budgetResult.textContent =
       "Routelia рассчитала примерный бюджет поездки.";
+
   }
 }
 
@@ -681,7 +751,10 @@ function createCountryPlan() {
   const container =
     document.getElementById("countryPlan");
 
+  if (!container) return;
+
   container.innerHTML = "";
+
 
   selectedCountries.forEach(country => {
 
@@ -691,12 +764,15 @@ function createCountryPlan() {
     countryBlock.className =
       "country-plan-block";
 
+
     const title =
       document.createElement("h4");
 
-    title.textContent = country;
+    title.textContent =
+      country;
 
     countryBlock.appendChild(title);
+
 
     selectedCities[country].forEach(city => {
 
@@ -706,10 +782,21 @@ function createCountryPlan() {
       item.className =
         "city-plan-item";
 
-      const description =
+
+      let description = "";
+
+      if (
+        typeof seasonInfo !== "undefined" &&
         seasonInfo[country] &&
-        seasonInfo[country][city] &&
-        seasonInfo[country][city][selectedSeason];
+        seasonInfo[country][city]
+      ) {
+
+        description =
+          seasonInfo[country][city][selectedSeason] ||
+          "";
+
+      }
+
 
       item.innerHTML =
         "<strong>" +
@@ -717,13 +804,17 @@ function createCountryPlan() {
         "</strong>" +
 
         "<p>" +
-        (description || "") +
+        description +
         "</p>";
 
+
       countryBlock.appendChild(item);
+
     });
 
+
     container.appendChild(countryBlock);
+
   });
 }
 
@@ -734,8 +825,11 @@ function getDayWord(days) {
     days % 10 === 1 &&
     days % 100 !== 11
   ) {
+
     return "день";
+
   }
+
 
   if (
     days % 10 >= 2 &&
@@ -745,8 +839,11 @@ function getDayWord(days) {
       days % 100 >= 20
     )
   ) {
+
     return "дня";
+
   }
+
 
   return "дней";
 }
@@ -765,7 +862,7 @@ function toggleAssistant() {
 
 document.addEventListener(
   "DOMContentLoaded",
-  () => {
+  function() {
 
     updateSelectedCountries();
     updateCitySections();
