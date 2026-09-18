@@ -190,6 +190,7 @@ h1 {
   outline: none;
 }
 
+
 /* COUNTRIES */
 
 .country-grid {
@@ -213,6 +214,7 @@ h1 {
   color: white;
   border-color: #171717;
 }
+
 
 /* CITIES */
 
@@ -298,6 +300,14 @@ h1 {
   display: block;
 }
 
+
+/* DAYS */
+
+.field:has(#days) {
+  margin-top: 22px;
+}
+
+
 /* SEASONS */
 
 .season-options {
@@ -311,8 +321,10 @@ h1 {
   background: #fafaf8;
   color: #171717;
   border-radius: 14px;
-  padding: 11px 5px;
-  font-size: 12px;
+  padding: 12px 7px;
+  font-size: 13px;
+  text-align: center;
+  transition: .15s ease;
 }
 
 .season-button.selected {
@@ -328,11 +340,12 @@ h1 {
   line-height: 1.45;
 }
 
+
 /* BUDGET */
 
 .budget-options {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 9px;
 }
 
@@ -376,6 +389,7 @@ h1 {
   margin-top: 8px;
   font-weight: 650;
 }
+
 
 /* RESULT */
 
@@ -483,6 +497,7 @@ h1 {
   line-height: 1.45;
 }
 
+
 /* ASSISTANT */
 
 .assistant {
@@ -536,6 +551,9 @@ footer {
   font-size: 13px;
 }
 
+
+/* MOBILE */
+
 @media (max-width: 700px) {
 
   .page {
@@ -578,5 +596,10 @@ footer {
   .country-button {
     padding: 12px 10px;
     font-size: 14px;
+  }
+
+  .season-button {
+    padding: 13px 8px;
+    font-size: 13px;
   }
 }
