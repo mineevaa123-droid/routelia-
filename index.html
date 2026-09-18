@@ -180,6 +180,22 @@
 
       </div>
 
+      <!-- DAYS -->
+
+      <div class="field">
+
+        <label>Количество дней</label>
+
+        <input
+          id="days"
+          type="number"
+          min="1"
+          max="90"
+          placeholder="14"
+        >
+
+      </div>
+
       <!-- СЕЗОН -->
 
       <div class="field">
@@ -220,22 +236,6 @@
 
       </div>
 
-      <!-- DAYS -->
-
-      <div class="field">
-
-        <label>Количество дней</label>
-
-        <input
-          id="days"
-          type="number"
-          min="1"
-          max="90"
-          placeholder="14"
-        >
-
-      </div>
-
       <!-- BUDGET -->
 
       <div class="field">
@@ -256,13 +256,6 @@
             id="budgetCalculate"
             onclick="selectBudget('calculate')">
             🎯 Рассчитать примерную стоимость
-          </button>
-
-          <button
-            class="budget-button"
-            id="budgetUnknown"
-            onclick="selectBudget('unknown')">
-            💭 Пока не знаю
           </button>
 
         </div>
