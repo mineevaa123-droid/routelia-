@@ -178,7 +178,7 @@
     }
 
     .field {
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .field label {
@@ -213,13 +213,11 @@
       border-radius: 14px;
       padding: 13px 14px;
       text-align: left;
-      transition: .15s ease;
-
       display: flex;
       align-items: center;
       gap: 8px;
       white-space: nowrap;
-      overflow: hidden;
+      transition: .15s ease;
     }
 
     .country-button:hover {
@@ -230,6 +228,55 @@
       background: #171717;
       color: white;
       border-color: #171717;
+    }
+
+    /* ГОРОДА */
+
+    .city-section {
+      display: none;
+      margin-top: 12px;
+      padding: 16px;
+      background: #f7f7f5;
+      border-radius: 17px;
+    }
+
+    .city-section.active {
+      display: block;
+    }
+
+    .city-title {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .city-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .city-button {
+      border: 1px solid #deded9;
+      background: white;
+      color: #171717;
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: 13px;
+      transition: .15s ease;
+    }
+
+    .city-button.selected {
+      background: #171717;
+      color: white;
+      border-color: #171717;
+    }
+
+    .selected-cities {
+      color: #777;
+      font-size: 12px;
+      line-height: 1.45;
+      margin-top: 10px;
     }
 
     .selected-countries {
@@ -270,10 +317,6 @@
       padding: 14px;
       text-align: left;
       transition: .15s ease;
-    }
-
-    .budget-button:hover {
-      border-color: #999;
     }
 
     .budget-button.selected {
@@ -385,6 +428,7 @@
       margin-top: 14px;
       color: #d5d5d1;
       font-size: 14px;
+      line-height: 1.45;
     }
 
     .country-plan {
@@ -471,6 +515,7 @@
     }
 
     @media (max-width: 700px) {
+
       .page {
         padding: 18px;
       }
@@ -520,27 +565,47 @@
   </style>
 </head>
 
+
 <body>
 
 <div class="page">
 
+  <!-- NAV -->
+
   <nav class="nav">
-    <div class="logo">routelia</div>
+
+    <div class="logo">
+      routelia
+    </div>
 
     <div class="nav-right">
-      <button class="nav-button" onclick="openPlanner()">
+
+      <button
+        class="nav-button"
+        onclick="openPlanner()">
+
         Планировать
+
       </button>
 
-      <button class="star-button" onclick="toggleAssistant()">
+      <button
+        class="star-button"
+        onclick="toggleAssistant()">
+
         ★
+
       </button>
+
     </div>
+
   </nav>
+
+
+  <!-- HERO -->
 
   <main>
 
-    <section class="hero" id="home">
+    <section class="hero">
 
       <div class="eyebrow">
         Travel planning, made simple
@@ -556,161 +621,284 @@
         от маршрута и городов до бюджета и идей для путешествия.
       </p>
 
-      <button class="main-button" onclick="openPlanner()">
+      <button
+        class="main-button"
+        onclick="openPlanner()">
+
         Спланировать поездку →
+
       </button>
 
     </section>
 
+
+    <!-- FEATURES -->
 
     <section class="features">
 
       <div class="feature">
-        <div class="feature-number">01</div>
-        <h3>Маршрут</h3>
-        <p>Собери несколько стран и городов в одну поездку.</p>
+
+        <div class="feature-number">
+          01
+        </div>
+
+        <h3>
+          Маршрут
+        </h3>
+
+        <p>
+          Выбери страны и конкретные города
+          для одной поездки.
+        </p>
+
       </div>
 
-      <div class="feature">
-        <div class="feature-number">02</div>
-        <h3>Идеи</h3>
-        <p>Места, города и впечатления под твои интересы.</p>
-      </div>
 
       <div class="feature">
-        <div class="feature-number">03</div>
-        <h3>План</h3>
-        <p>Всё путешествие в одном понятном плане.</p>
+
+        <div class="feature-number">
+          02
+        </div>
+
+        <h3>
+          Идеи
+        </h3>
+
+        <p>
+          Места, города и впечатления
+          под твоё путешествие.
+        </p>
+
+      </div>
+
+
+      <div class="feature">
+
+        <div class="feature-number">
+          03
+        </div>
+
+        <h3>
+          Бюджет
+        </h3>
+
+        <p>
+          Получи ориентировочную стоимость
+          всей поездки.
+        </p>
+
       </div>
 
     </section>
 
 
-    <section class="planner" id="planner">
+    <!-- PLANNER -->
 
-      <button class="back" onclick="closePlanner()">
+    <section
+      class="planner"
+      id="planner">
+
+      <button
+        class="back"
+        onclick="closePlanner()">
+
         ← Назад
+
       </button>
 
-      <h2>Создай поездку</h2>
+
+      <h2>
+        Создай поездку
+      </h2>
 
       <p class="planner-subtitle">
-        Расскажи Routelia немного о своём путешествии.
+        Выбери страны и города — Routelia
+        рассчитает примерный план поездки.
       </p>
 
 
-      <!-- ОТКУДА -->
+      <!-- FROM -->
 
       <div class="field">
 
-        <label>Откуда</label>
+        <label>
+          Откуда
+        </label>
 
         <input
           id="from"
           type="text"
-          placeholder="Например, Новосибирск"
-        >
+          placeholder="Например, Новосибирск">
 
       </div>
 
 
-      <!-- СТРАНЫ -->
+      <!-- COUNTRIES -->
 
       <div class="field">
 
-        <label>Куда</label>
+        <label>
+          Страны
+        </label>
+
 
         <div class="country-grid">
 
-          <button type="button" class="country-button"
+          <button
+            type="button"
+            class="country-button"
             onclick="toggleCountry(this, 'Германия')">
+
             🇩🇪 Германия
+
           </button>
 
-          <button type="button" class="country-button"
+
+          <button
+            type="button"
+            class="country-button"
             onclick="toggleCountry(this, 'Франция')">
+
             🇫🇷 Франция
+
           </button>
 
-          <button type="button" class="country-button"
+
+          <button
+            type="button"
+            class="country-button"
             onclick="toggleCountry(this, 'Испания')">
+
             🇪🇸 Испания
+
           </button>
 
-          <button type="button" class="country-button"
+
+          <button
+            type="button"
+            class="country-button"
             onclick="toggleCountry(this, 'Италия')">
+
             🇮🇹 Италия
+
           </button>
 
-          <button type="button" class="country-button"
+
+          <button
+            type="button"
+            class="country-button"
             onclick="toggleCountry(this, 'Нидерланды')">
+
             🇳🇱 Нидерланды
+
           </button>
 
-          <button type="button" class="country-button"
+
+          <button
+            type="button"
+            class="country-button"
             onclick="toggleCountry(this, 'Австрия')">
+
             🇦🇹 Австрия
+
           </button>
 
-          <button type="button" class="country-button"
+
+          <button
+            type="button"
+            class="country-button"
             onclick="toggleCountry(this, 'Чехия')">
+
             🇨🇿 Чехия
+
           </button>
 
-          <button type="button" class="country-button"
+
+          <button
+            type="button"
+            class="country-button"
             onclick="toggleCountry(this, 'Португалия')">
+
             🇵🇹 Португалия
+
           </button>
 
-          <button type="button" class="country-button"
+
+          <button
+            type="button"
+            class="country-button"
             onclick="toggleCountry(this, 'Швейцария')">
+
             🇨🇭 Швейцария
+
           </button>
 
-          <button type="button" class="country-button"
+
+          <button
+            type="button"
+            class="country-button"
             onclick="toggleCountry(this, 'Бельгия')">
+
             🇧🇪 Бельгия
+
           </button>
 
         </div>
 
-        <div class="selected-countries" id="selectedCountries">
-          Выбери одну или несколько стран
+
+        <div
+          class="selected-countries"
+          id="selectedCountries">
+
+          Сначала выбери страны
+
         </div>
+
+
+        <!-- CITY SECTIONS -->
+
+        <div id="citySections"></div>
+
 
         <button
           type="button"
           class="reset-countries"
           id="resetCountries"
           onclick="resetCountries()">
+
           Сбросить выбор
+
         </button>
 
       </div>
 
 
-      <!-- ДНИ -->
+      <!-- DAYS -->
 
       <div class="field">
 
-        <label>Количество дней</label>
+        <label>
+          Количество дней
+        </label>
 
         <input
           id="days"
           type="number"
           min="1"
           max="90"
-          placeholder="14"
-        >
+          placeholder="14">
 
       </div>
 
 
-      <!-- БЮДЖЕТ -->
+      <!-- BUDGET -->
 
       <div class="field">
 
-        <label>Сколько планируете потратить?</label>
+        <label>
+          Сколько планируете потратить?
+        </label>
+
 
         <div class="budget-options">
 
@@ -723,6 +911,7 @@
             💰 У меня есть бюджет
 
           </button>
+
 
           <button
             type="button"
@@ -737,17 +926,19 @@
         </div>
 
 
-        <div class="budget-input" id="budgetInput">
+        <div
+          class="budget-input"
+          id="budgetInput">
 
           <input
             id="budget"
             type="number"
             min="1"
-            placeholder="Например, 1500"
-          >
+            placeholder="Например, 1500">
 
           <div class="budget-note">
-            Укажи сумму в евро. Routelia сравнит её с примерной стоимостью поездки.
+            Сумма в евро. Routelia сравнит её
+            с примерной стоимостью маршрута.
           </div>
 
         </div>
@@ -766,27 +957,27 @@
     </section>
 
 
-    <!-- РЕЗУЛЬТАТ -->
+    <!-- RESULT -->
 
-    <section class="result" id="result">
+    <section
+      class="result"
+      id="result">
 
-      <h2>Твой маршрут готов ✦</h2>
+      <h2>
+        Твой маршрут готов ✦
+      </h2>
 
       <p id="resultText"></p>
 
 
-      <div class="route">
-
-        <span class="city" id="routeFrom"></span>
-
-        <span class="city">→</span>
-
-        <span class="city" id="routeTo"></span>
+      <div
+        class="route"
+        id="route">
 
       </div>
 
 
-      <!-- СТОИМОСТЬ -->
+      <!-- COST -->
 
       <div class="cost-box">
 
@@ -794,14 +985,19 @@
           Ориентировочная стоимость поездки
         </div>
 
-        <div class="cost" id="totalCost">
+        <div
+          class="cost"
+          id="totalCost">
+
           €0
+
         </div>
+
 
         <div class="cost-breakdown">
 
           <div class="cost-row">
-            <span>✈️ Перелёт</span>
+            <span>✈️ Дорога до маршрута</span>
             <span id="flightCost"></span>
           </div>
 
@@ -811,7 +1007,7 @@
           </div>
 
           <div class="cost-row">
-            <span>🚆 Транспорт</span>
+            <span>🚆 Переезды и транспорт</span>
             <span id="transportCost"></span>
           </div>
 
@@ -827,16 +1023,22 @@
 
         </div>
 
-        <div class="budget-result" id="budgetResult"></div>
+
+        <div
+          class="budget-result"
+          id="budgetResult">
+        </div>
 
       </div>
 
 
-      <!-- ПЛАН ПО СТРАНАМ -->
+      <!-- PLAN -->
 
       <div class="country-plan">
 
-        <h3>План поездки</h3>
+        <h3>
+          План поездки
+        </h3>
 
         <div id="countryPlan"></div>
 
@@ -844,9 +1046,12 @@
 
 
       <div class="disclaimer">
-        Стоимость является ориентировочной оценкой. Реальные цены
-        зависят от дат, города вылета, сезона, выбранного жилья
-        и конкретных вариантов транспорта.
+
+        Стоимость является ориентировочной оценкой.
+        Она не является ценой бронирования и может
+        изменяться в зависимости от дат, сезона,
+        выбранного жилья и транспорта.
+
       </div>
 
     </section>
@@ -863,19 +1068,27 @@
 
 <!-- ASSISTANT -->
 
-<button class="assistant" onclick="toggleAssistant()">
+<button
+  class="assistant"
+  onclick="toggleAssistant()">
+
   ★
+
 </button>
 
-<div class="assistant-box" id="assistantBox">
+
+<div
+  class="assistant-box"
+  id="assistantBox">
 
   <div class="assistant-title">
     Routelia Assistant ★
   </div>
 
   <p>
-    Привет! Я помогу тебе разобраться с поездкой,
-    маршрутом и идеями для путешествия по Европе.
+    Привет! Я помогу тебе разобраться
+    с поездкой, маршрутом и идеями
+    для путешествия по Европе.
   </p>
 
 </div>
@@ -884,10 +1097,283 @@
 <script>
 
   let selectedCountries = [];
+  let selectedCities = {};
   let budgetMode = "";
 
 
-  /* ОТКРЫТЬ ПЛАНИРОВЩИК */
+  /*
+    ДАННЫЕ ГОРОДОВ
+
+    hotel = ориентир за ночь
+    food = еда на человека в день
+    transport = городской транспорт в день
+  */
+
+  const cityData = {
+
+    "Германия": {
+
+      "Берлин": {
+        hotel: 75,
+        food: 35,
+        transport: 10
+      },
+
+      "Мюнхен": {
+        hotel: 90,
+        food: 40,
+        transport: 11
+      },
+
+      "Кёльн": {
+        hotel: 70,
+        food: 35,
+        transport: 10
+      },
+
+      "Гамбург": {
+        hotel: 80,
+        food: 37,
+        transport: 10
+      }
+
+    },
+
+
+    "Франция": {
+
+      "Париж": {
+        hotel: 105,
+        food: 45,
+        transport: 12
+      },
+
+      "Ницца": {
+        hotel: 100,
+        food: 45,
+        transport: 10
+      },
+
+      "Лион": {
+        hotel: 75,
+        food: 38,
+        transport: 9
+      },
+
+      "Страсбург": {
+        hotel: 70,
+        food: 35,
+        transport: 8
+      }
+
+    },
+
+
+    "Испания": {
+
+      "Барселона": {
+        hotel: 90,
+        food: 38,
+        transport: 9
+      },
+
+      "Мадрид": {
+        hotel: 75,
+        food: 35,
+        transport: 8
+      },
+
+      "Валенсия": {
+        hotel: 65,
+        food: 32,
+        transport: 7
+      },
+
+      "Севилья": {
+        hotel: 60,
+        food: 30,
+        transport: 6
+      }
+
+    },
+
+
+    "Италия": {
+
+      "Рим": {
+        hotel: 80,
+        food: 38,
+        transport: 8
+      },
+
+      "Милан": {
+        hotel: 90,
+        food: 40,
+        transport: 9
+      },
+
+      "Флоренция": {
+        hotel: 85,
+        food: 40,
+        transport: 8
+      },
+
+      "Венеция": {
+        hotel: 105,
+        food: 45,
+        transport: 10
+      }
+
+    },
+
+
+    "Нидерланды": {
+
+      "Амстердам": {
+        hotel: 110,
+        food: 45,
+        transport: 12
+      },
+
+      "Роттердам": {
+        hotel: 80,
+        food: 38,
+        transport: 10
+      },
+
+      "Гаага": {
+        hotel: 75,
+        food: 37,
+        transport: 9
+      },
+
+      "Утрехт": {
+        hotel: 80,
+        food: 38,
+        transport: 9
+      }
+
+    },
+
+
+    "Австрия": {
+
+      "Вена": {
+        hotel: 75,
+        food: 35,
+        transport: 9
+      },
+
+      "Зальцбург": {
+        hotel: 90,
+        food: 40,
+        transport: 9
+      },
+
+      "Инсбрук": {
+        hotel: 90,
+        food: 40,
+        transport: 9
+      }
+
+    },
+
+
+    "Чехия": {
+
+      "Прага": {
+        hotel: 55,
+        food: 28,
+        transport: 5
+      },
+
+      "Брно": {
+        hotel: 45,
+        food: 25,
+        transport: 4
+      },
+
+      "Чески-Крумлов": {
+        hotel: 55,
+        food: 27,
+        transport: 4
+      }
+
+    },
+
+
+    "Португалия": {
+
+      "Лиссабон": {
+        hotel: 70,
+        food: 32,
+        transport: 7
+      },
+
+      "Порту": {
+        hotel: 60,
+        food: 30,
+        transport: 6
+      },
+
+      "Фару": {
+        hotel: 65,
+        food: 30,
+        transport: 6
+      }
+
+    },
+
+
+    "Швейцария": {
+
+      "Цюрих": {
+        hotel: 130,
+        food: 55,
+        transport: 15
+      },
+
+      "Женева": {
+        hotel: 135,
+        food: 55,
+        transport: 14
+      },
+
+      "Люцерн": {
+        hotel: 140,
+        food: 55,
+        transport: 14
+      }
+
+    },
+
+
+    "Бельгия": {
+
+      "Брюссель": {
+        hotel: 75,
+        food: 35,
+        transport: 8
+      },
+
+      "Брюгге": {
+        hotel: 85,
+        food: 38,
+        transport: 7
+      },
+
+      "Антверпен": {
+        hotel: 70,
+        food: 35,
+        transport: 7
+      }
+
+    }
+
+  };
+
+
+  /* ОТКРЫТЬ */
 
   function openPlanner() {
 
@@ -924,24 +1410,34 @@
   }
 
 
-  /* СТРАНЫ */
+  /* ВЫБОР СТРАНЫ */
 
   function toggleCountry(button, country) {
 
-    if (selectedCountries.includes(country)) {
+    if (
+      selectedCountries.includes(country)
+    ) {
 
       selectedCountries =
         selectedCountries.filter(
           item => item !== country
         );
 
+      delete selectedCities[country];
+
       button.classList.remove("selected");
+
+      removeCitySection(country);
 
     } else {
 
       selectedCountries.push(country);
 
+      selectedCities[country] = [];
+
       button.classList.add("selected");
+
+      createCitySection(country);
 
     }
 
@@ -950,19 +1446,195 @@
   }
 
 
+  /* СОЗДАТЬ ГОРОДА */
+
+  function createCitySection(country) {
+
+    const container =
+      document.getElementById("citySections");
+
+
+    const section =
+      document.createElement("div");
+
+    section.className =
+      "city-section active";
+
+    section.id =
+      "cities-" + country;
+
+
+    const title =
+      document.createElement("div");
+
+    title.className =
+      "city-title";
+
+    title.textContent =
+      "Города — " + country;
+
+
+    const grid =
+      document.createElement("div");
+
+    grid.className =
+      "city-grid";
+
+
+    Object.keys(
+      cityData[country]
+    ).forEach(city => {
+
+      const button =
+        document.createElement("button");
+
+      button.type = "button";
+
+      button.className =
+        "city-button";
+
+      button.textContent =
+        city;
+
+      button.onclick = function() {
+
+        toggleCity(
+          button,
+          country,
+          city
+        );
+
+      };
+
+
+      grid.appendChild(button);
+
+    });
+
+
+    const selected =
+      document.createElement("div");
+
+    selected.className =
+      "selected-cities";
+
+    selected.id =
+      "selected-" + country;
+
+    selected.textContent =
+      "Выбери один или несколько городов";
+
+
+    section.appendChild(title);
+
+    section.appendChild(grid);
+
+    section.appendChild(selected);
+
+    container.appendChild(section);
+
+  }
+
+
+  /* УДАЛИТЬ ГОРОДА */
+
+  function removeCitySection(country) {
+
+    const section =
+      document.getElementById(
+        "cities-" + country
+      );
+
+    if (section) {
+      section.remove();
+    }
+
+  }
+
+
+  /* ВЫБОР ГОРОДА */
+
+  function toggleCity(
+    button,
+    country,
+    city
+  ) {
+
+    if (
+      selectedCities[country].includes(city)
+    ) {
+
+      selectedCities[country] =
+        selectedCities[country].filter(
+          item => item !== city
+        );
+
+      button.classList.remove("selected");
+
+    } else {
+
+      selectedCities[country].push(city);
+
+      button.classList.add("selected");
+
+    }
+
+
+    updateSelectedCities(country);
+
+  }
+
+
+  function updateSelectedCities(country) {
+
+    const element =
+      document.getElementById(
+        "selected-" + country
+      );
+
+
+    const cities =
+      selectedCities[country];
+
+
+    if (!cities || cities.length === 0) {
+
+      element.textContent =
+        "Выбери один или несколько городов";
+
+      return;
+
+    }
+
+
+    element.textContent =
+      "Выбрано: " +
+      cities.join(", ");
+
+  }
+
+
+  /* ОБНОВИТЬ СТРАНЫ */
+
   function updateSelectedCountries() {
 
     const selected =
-      document.getElementById("selectedCountries");
+      document.getElementById(
+        "selectedCountries"
+      );
 
     const reset =
-      document.getElementById("resetCountries");
+      document.getElementById(
+        "resetCountries"
+      );
 
 
-    if (selectedCountries.length === 0) {
+    if (
+      selectedCountries.length === 0
+    ) {
 
       selected.textContent =
-        "Выбери одну или несколько стран";
+        "Сначала выбери страны";
 
       reset.classList.remove("active");
 
@@ -972,7 +1644,7 @@
 
 
     selected.textContent =
-      "Выбрано: " +
+      "Страны: " +
       selectedCountries.join(", ");
 
     reset.classList.add("active");
@@ -980,9 +1652,14 @@
   }
 
 
+  /* СБРОС */
+
   function resetCountries() {
 
     selectedCountries = [];
+
+    selectedCities = {};
+
 
     document
       .querySelectorAll(".country-button")
@@ -991,6 +1668,12 @@
         button.classList.remove("selected");
 
       });
+
+
+    document.getElementById(
+      "citySections"
+    ).innerHTML = "";
+
 
     updateSelectedCountries();
 
@@ -1003,28 +1686,38 @@
 
     budgetMode = mode;
 
+
     const have =
-      document.getElementById("budgetHave");
+      document.getElementById(
+        "budgetHave"
+      );
 
     const calculate =
-      document.getElementById("budgetCalculate");
+      document.getElementById(
+        "budgetCalculate"
+      );
 
     const input =
-      document.getElementById("budgetInput");
+      document.getElementById(
+        "budgetInput"
+      );
 
 
     have.classList.remove("selected");
+
     calculate.classList.remove("selected");
 
 
     if (mode === "have") {
 
       have.classList.add("selected");
+
       input.classList.add("active");
 
     } else {
 
       calculate.classList.add("selected");
+
       input.classList.remove("active");
 
     }
@@ -1032,15 +1725,17 @@
   }
 
 
-  /* СЛОВО ДЕНЬ / ДНЯ / ДНЕЙ */
+  /* СЛОВО ДЕНЬ */
 
-  function getDayWord(days) {
+  function dayWord(number) {
 
-    if (days === 1) return "день";
+    if (number === 1) {
+      return "день";
+    }
 
     if (
-      days >= 2 &&
-      days <= 4
+      number >= 2 &&
+      number <= 4
     ) {
       return "дня";
     }
@@ -1048,63 +1743,6 @@
     return "дней";
 
   }
-
-
-  /* ГОРОДА */
-
-  const cityData = {
-
-    "Германия": {
-      city: "Берлин",
-      daily: 75
-    },
-
-    "Франция": {
-      city: "Париж",
-      daily: 90
-    },
-
-    "Испания": {
-      city: "Барселона",
-      daily: 80
-    },
-
-    "Италия": {
-      city: "Рим",
-      daily: 75
-    },
-
-    "Нидерланды": {
-      city: "Амстердам",
-      daily: 95
-    },
-
-    "Австрия": {
-      city: "Вена",
-      daily: 75
-    },
-
-    "Чехия": {
-      city: "Прага",
-      daily: 55
-    },
-
-    "Португалия": {
-      city: "Лиссабон",
-      daily: 65
-    },
-
-    "Швейцария": {
-      city: "Цюрих",
-      daily: 120
-    },
-
-    "Бельгия": {
-      city: "Брюссель",
-      daily: 70
-    }
-
-  };
 
 
   /* СОЗДАНИЕ МАРШРУТА */
@@ -1117,21 +1755,22 @@
         .value
         .trim();
 
+
     const days =
       Number(
-        document.getElementById("days").value
+        document
+          .getElementById("days")
+          .value
       );
 
 
     /* ПРОВЕРКИ */
 
-    if (
-      !from ||
-      selectedCountries.length === 0 ||
-      !days
-    ) {
+    if (!from) {
 
-      alert("Заполни все поля");
+      alert(
+        "Укажи город отправления"
+      );
 
       return;
 
@@ -1139,6 +1778,20 @@
 
 
     if (
+      selectedCountries.length === 0
+    ) {
+
+      alert(
+        "Выбери хотя бы одну страну"
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !days ||
       days < 1 ||
       days > 90
     ) {
@@ -1165,7 +1818,11 @@
 
     if (
       budgetMode === "have" &&
-      !Number(document.getElementById("budget").value)
+      !Number(
+        document
+          .getElementById("budget")
+          .value
+      )
     ) {
 
       alert(
@@ -1177,43 +1834,106 @@
     }
 
 
-    /* ДНИ ПО СТРАНАМ */
+    /* ПРОВЕРЯЕМ ГОРОДА */
 
-    const baseDays =
-      Math.floor(
-        days / selectedCountries.length
-      );
+    for (
+      let country of selectedCountries
+    ) {
 
-    const extraDays =
-      days % selectedCountries.length;
+      if (
+        !selectedCities[country] ||
+        selectedCities[country].length === 0
+      ) {
+
+        alert(
+          "Выбери хотя бы один город в стране: " +
+          country
+        );
+
+        return;
+
+      }
+
+    }
 
 
-    let daysByCountry = [];
+    /*
+      СОЗДАЁМ СПИСОК ВСЕХ ГОРОДОВ
+    */
+
+    let tripCities = [];
+
 
     selectedCountries.forEach(
-      (country, index) => {
+      country => {
 
-        let countryDays =
-          baseDays;
+        selectedCities[country].forEach(
+          city => {
 
-        if (index < extraDays) {
-          countryDays++;
-        }
+            tripCities.push({
+              country: country,
+              city: city
+            });
 
-        daysByCountry.push({
-          country: country,
-          days: countryDays
-        });
+          }
+        );
 
       }
     );
 
 
-    /* ПЕРЕЛЁТ */
+    /*
+      РАСПРЕДЕЛЯЕМ ДНИ
+
+      Каждый выбранный город получает
+      примерно одинаковое количество дней.
+    */
+
+    const baseDays =
+      Math.floor(
+        days / tripCities.length
+      );
+
+
+    const extraDays =
+      days % tripCities.length;
+
+
+    tripCities.forEach(
+      (item, index) => {
+
+        item.days =
+          baseDays +
+          (index < extraDays ? 1 : 0);
+
+      }
+    );
+
+
+    /*
+      ЕСЛИ ГОРОДОВ БОЛЬШЕ, ЧЕМ ДНЕЙ,
+      НЕ ДАЁМ ГОРОДУ 0 ДНЕЙ
+    */
+
+    if (baseDays < 1) {
+
+      alert(
+        "Для такого количества городов нужно больше дней. Выбери меньше городов или увеличь длительность поездки."
+      );
+
+      return;
+
+    }
+
+
+    /* ПЕРЕЛЁТ / ДОРОГА ДО ЕВРОПЫ */
 
     let flightCost;
 
-    if (from.toLowerCase().includes("новосибир")) {
+
+    if (
+      from.toLowerCase().includes("новосибир")
+    ) {
 
       flightCost =
         selectedCountries.length === 1
@@ -1230,44 +1950,102 @@
     }
 
 
-    /* ПРОЖИВАНИЕ */
+    /*
+      ПРОЖИВАНИЕ
+    */
 
     let hotelCost = 0;
 
-    daysByCountry.forEach(item => {
+
+    tripCities.forEach(item => {
+
+      const data =
+        cityData[item.country][item.city];
+
 
       hotelCost +=
-        cityData[item.country].daily *
+        data.hotel *
         item.days;
 
     });
 
 
-    /* ТРАНСПОРТ */
+    /*
+      ЕДА
+    */
 
-    let transportCost =
-      days * 12 +
+    let foodCost = 0;
+
+
+    tripCities.forEach(item => {
+
+      const data =
+        cityData[item.country][item.city];
+
+
+      foodCost +=
+        data.food *
+        item.days;
+
+    });
+
+
+    /*
+      ГОРОДСКОЙ ТРАНСПОРТ
+    */
+
+    let localTransport = 0;
+
+
+    tripCities.forEach(item => {
+
+      const data =
+        cityData[item.country][item.city];
+
+
+      localTransport +=
+        data.transport *
+        item.days;
+
+    });
+
+
+    /*
+      МЕЖДУГОРОДНИЕ ПЕРЕЕЗДЫ
+
+      Чем больше городов,
+      тем больше переездов.
+    */
+
+    const intercityTrips =
       Math.max(
         0,
-        selectedCountries.length - 1
-      ) * 70;
+        tripCities.length - 1
+      );
 
 
-    /* ЕДА */
-
-    let foodCost =
-      days * 35;
+    const intercityCost =
+      intercityTrips * 65;
 
 
-    /* РАЗВЛЕЧЕНИЯ */
+    const transportCost =
+      localTransport +
+      intercityCost;
 
-    let funCost =
+
+    /*
+      РАЗВЛЕЧЕНИЯ
+    */
+
+    const funCost =
       days * 15;
 
 
-    /* ИТОГО */
+    /*
+      ИТОГ
+    */
 
-    let total =
+    const total =
       flightCost +
       hotelCost +
       transportCost +
@@ -1276,39 +2054,80 @@
 
 
     /*
-      ДЕЛАЕМ ДИАПАЗОН,
-      ЧТОБЫ НЕ СОЗДАВАТЬ ЛОЖНОЕ
-      ОЩУЩЕНИЕ ТОЧНОЙ ЦЕНЫ
+      ДИАПАЗОН
+
+      ±10–15% от расчёта
     */
 
     const lower =
-      Math.round(total * 0.9 / 10) * 10;
+      Math.round(
+        total * 0.9 / 10
+      ) * 10;
+
 
     const upper =
-      Math.round(total * 1.15 / 10) * 10;
+      Math.round(
+        total * 1.15 / 10
+      ) * 10;
 
 
-    /* МАРШРУТ */
+    /*
+      МАРШРУТ НА ЭКРАНЕ
+    */
 
-    document
-      .getElementById("routeFrom")
-      .textContent = from;
-
-
-    const cities =
-      selectedCountries.map(
-        country =>
-          cityData[country].city
-      );
+    const route =
+      document.getElementById("route");
 
 
-    document
-      .getElementById("routeTo")
-      .textContent =
-        cities.join(" → ");
+    route.innerHTML = "";
 
 
-    /* ТЕКСТ */
+    const fromCity =
+      document.createElement("span");
+
+    fromCity.className =
+      "city";
+
+    fromCity.textContent =
+      from;
+
+
+    route.appendChild(fromCity);
+
+
+    tripCities.forEach(
+      (item, index) => {
+
+        const arrow =
+          document.createElement("span");
+
+        arrow.className =
+          "city";
+
+        arrow.textContent =
+          "→";
+
+        route.appendChild(arrow);
+
+
+        const city =
+          document.createElement("span");
+
+        city.className =
+          "city";
+
+        city.textContent =
+          item.city;
+
+        route.appendChild(city);
+
+      }
+    );
+
+
+    /*
+      ТЕКСТ
+    */
 
     document
       .getElementById("resultText")
@@ -1316,17 +2135,29 @@
         "Поездка на " +
         days +
         " " +
-        getDayWord(days) +
+        dayWord(days) +
         " через " +
         selectedCountries.length +
         " " +
-        (selectedCountries.length === 1
-          ? "страну"
-          : "страны") +
-        ". Routelia рассчитала примерный бюджет и распределила дни между странами.";
+        (
+          selectedCountries.length === 1
+            ? "страну"
+            : "страны"
+        ) +
+        " и " +
+        tripCities.length +
+        " " +
+        (
+          tripCities.length === 1
+            ? "город"
+            : "города"
+        ) +
+        ".";
 
 
-    /* ЦЕНА */
+    /*
+      СТОИМОСТЬ
+    */
 
     document
       .getElementById("totalCost")
@@ -1355,32 +2186,36 @@
       .getElementById("transportCost")
       .textContent =
         "≈ €" +
-        transportCost;
+        transportCost.toLocaleString("ru-RU");
 
 
     document
       .getElementById("foodCost")
       .textContent =
         "≈ €" +
-        foodCost;
+        foodCost.toLocaleString("ru-RU");
 
 
     document
       .getElementById("funCost")
       .textContent =
         "≈ €" +
-        funCost;
+        funCost.toLocaleString("ru-RU");
 
 
-    /* СРАВНЕНИЕ С БЮДЖЕТОМ */
+    /*
+      СРАВНЕНИЕ С БЮДЖЕТОМ
+    */
 
     const budgetResult =
-      document.getElementById("budgetResult");
+      document.getElementById(
+        "budgetResult"
+      );
 
 
     if (budgetMode === "have") {
 
-      const userBudget =
+      const budget =
         Number(
           document
             .getElementById("budget")
@@ -1388,78 +2223,98 @@
         );
 
 
-      if (userBudget < lower) {
+      if (budget < lower) {
 
         budgetResult.textContent =
-          "Ваш бюджет ниже ориентировочной стоимости поездки. Можно сократить количество дней, выбрать более дешёвое жильё или убрать часть расходов.";
+          "Указанный бюджет ниже ориентировочной стоимости маршрута. Можно уменьшить количество городов или дней, либо выбрать более бюджетное жильё.";
 
-      } else if (userBudget >= upper) {
+      } else if (budget >= upper) {
 
         budgetResult.textContent =
-          "Ориентировочно вы укладываетесь в указанный бюджет.";
+          "Указанного бюджета ориентировочно достаточно для этого маршрута. Дополнительный запас всё равно пригодится на изменение цен.";
 
       } else {
 
         budgetResult.textContent =
-          "Бюджет близок к ориентировочной стоимости. Стоит оставить небольшой запас на изменение цен.";
+          "Бюджет близок к ориентировочной стоимости поездки. Лучше оставить небольшой запас.";
 
       }
 
     } else {
 
       budgetResult.textContent =
-        "Расчёт выполнен без заданного бюджета — можно использовать эту сумму как ориентир.";
+        "Расчёт выполнен без заданного бюджета — используй сумму как ориентир.";
 
     }
 
 
-    /* ПЛАН ПО СТРАНАМ */
+    /*
+      ПЛАН ПО ГОРОДАМ
+    */
 
     const countryPlan =
-      document.getElementById("countryPlan");
+      document.getElementById(
+        "countryPlan"
+      );
 
 
     countryPlan.innerHTML = "";
 
 
-    daysByCountry.forEach(item => {
+    tripCities.forEach(
+      item => {
 
-      const data =
-        cityData[item.country];
-
-
-      const div =
-        document.createElement("div");
-
-      div.className =
-        "country-item";
+        const data =
+          cityData[item.country][item.city];
 
 
-      div.innerHTML =
+        const block =
+          document.createElement("div");
 
-        '<div class="country-name">' +
-        item.country +
-        " · " +
-        data.city +
-        "</div>" +
-
-        '<div class="country-info">' +
-        item.days +
-        " " +
-        getDayWord(item.days) +
-        " · ориентир на проживание: €" +
-        (
-          data.daily * item.days
-        ).toLocaleString("ru-RU") +
-        "</div>";
+        block.className =
+          "country-item";
 
 
-      countryPlan.appendChild(div);
+        block.innerHTML =
 
-    });
+          '<div class="country-name">' +
+          item.country +
+          " · " +
+          item.city +
+          "</div>" +
+
+          '<div class="country-info">' +
+
+          item.days +
+          " " +
+          dayWord(item.days) +
+
+          " · проживание ≈ €" +
+
+          (
+            data.hotel *
+            item.days
+          ).toLocaleString("ru-RU") +
+
+          " · еда ≈ €" +
+
+          (
+            data.food *
+            item.days
+          ).toLocaleString("ru-RU") +
+
+          "</div>";
 
 
-    /* ПОКАЗ */
+        countryPlan.appendChild(block);
+
+      }
+    );
+
+
+    /*
+      ПОКАЗЫВАЕМ РЕЗУЛЬТАТ
+    */
 
     document
       .getElementById("result")
