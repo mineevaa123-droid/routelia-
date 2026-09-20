@@ -2,12 +2,46 @@ let selectedCountries = [];
 let selectedCities = {};
 let selectedSeason = "";
 let budgetMode = "";
+let departureCountry = "";
 const seasonNames = {
   spring: "🌸 Весна",
   summer: "☀️ Лето",
   autumn: "🍂 Осень",
   winter: "❄️ Зима"
 };
+/* =========================
+   ГОРОДА ОТПРАВЛЕНИЯ
+========================= */
+const departureCities = {
+  "Россия": [
+    "Новосибирск",
+    "Москва",
+    "Санкт-Петербург",
+    "Екатеринбург",
+    "Казань",
+    "Омск",
+    "Самара",
+    "Ростов-на-Дону",
+    "Нижний Новгород",
+    "Уфа",
+    "Красноярск",
+    "Пермь",
+    "Воронеж",
+    "Волгоград",
+    "Сочи",
+    "Калининград"
+  ],
+  "Казахстан": [
+    "Алматы",
+    "Астана"
+  ],
+  "Беларусь": [
+    "Минск"
+  ]
+};
+/* =========================
+   ГОРОДА ЕВРОПЫ
+========================= */
 const cityData = {
   "Германия": {
     "Берлин": { price: 75 },
@@ -65,33 +99,12 @@ const cityData = {
     "Антверпен": { price: 75 }
   }
 };
-const allowedDepartureCities = [
-  "новосибирск",
-  "москва",
-  "санкт-петербург",
-  "спб",
-  "екатеринбург",
-  "казань",
-  "омск",
-  "самара",
-  "ростов-на-дону",
-  "нижний новгород",
-  "уфа",
-  "красноярск",
-  "пермь",
-  "воронеж",
-  "волгоград",
-  "сочи",
-  "калининград",
-  "минск",
-  "алматы",
-  "астана"
-];
 /* =========================
    ПЛАНИРОВЩИК
 ========================= */
 function openPlanner() {
-  const planner = document.getElementById("planner");
+  const planner =
+    document.getElementById("planner");
   if (!planner) {
     alert("Ошибка: планировщик не найден.");
     return;
@@ -105,7 +118,8 @@ function openPlanner() {
   }, 50);
 }
 function closePlanner() {
-  const planner = document.getElementById("planner");
+  const planner =
+    document.getElementById("planner");
   if (!planner) return;
   planner.style.display = "none";
   window.scrollTo({
@@ -114,13 +128,46 @@ function closePlanner() {
   });
 }
 /* =========================
-   СТРАНЫ
+   СТРАНА ОТПРАВЛЕНИЯ
+========================= */
+function selectDepartureCountry(button, country) {
+  departureCountry = country;
+  document
+    .querySelectorAll(".departure-country-button")
+    .forEach(function (item) {
+      item.classList.remove("selected");
+    });
+  button.classList.add("selected");
+  const citySelect =
+    document.getElementById("from");
+  if (!citySelect) return;
+  citySelect.innerHTML = "";
+  const firstOption =
+    document.createElement("option");
+  firstOption.value = "";
+  firstOption.textContent =
+    "Выбери город";
+  citySelect.appendChild(firstOption);
+  departureCities[country].forEach(function (city) {
+    const option =
+      document.createElement("option");
+    option.value = city;
+    option.textContent = city;
+    citySelect.appendChild(option);
+  });
+  citySelect.disabled = false;
+}
+/* =========================
+   СТРАНЫ МАРШРУТА
 ========================= */
 function toggleCountry(button, country) {
   if (selectedCountries.includes(country)) {
-    selectedCountries = selectedCountries.filter(
-      c => c !== country
-    );
+    selectedCountries =
+      selectedCountries.filter(
+        function (c) {
+          return c !== country;
+        }
+      );
     delete selectedCities[country];
     button.classList.remove("selected");
   } else {
@@ -133,54 +180,76 @@ function toggleCountry(button, country) {
   updateSeasonInfo();
 }
 function updateSelectedCountries() {
-  const element = document.getElementById("selectedCountries");
+  const element =
+    document.getElementById("selectedCountries");
   if (!element) return;
   if (!selectedCountries.length) {
-    element.textContent = "Сначала выбери страны";
+    element.textContent =
+      "Сначала выбери страны";
     return;
   }
   element.textContent =
-    "Страны: " + selectedCountries.join(", ");
+    "Страны: " +
+    selectedCountries.join(", ");
 }
 /* =========================
-   ГОРОДА
+   ГОРОДА МАРШРУТА
 ========================= */
 function updateCitySections() {
-  const container = document.getElementById("citySections");
+  const container =
+    document.getElementById("citySections");
   if (!container) return;
   container.innerHTML = "";
-  selectedCountries.forEach(country => {
-    const section = document.createElement("div");
-    section.className = "city-section";
-    const title = document.createElement("h3");
-    title.textContent = "Города — " + country;
+  selectedCountries.forEach(function (country) {
+    const section =
+      document.createElement("div");
+    section.className =
+      "city-section";
+    const title =
+      document.createElement("h3");
+    title.textContent =
+      "Города — " + country;
     section.appendChild(title);
-    const grid = document.createElement("div");
-    grid.className = "city-grid";
-    Object.keys(cityData[country]).forEach(city => {
-      const button = document.createElement("button");
-      button.className = "city-button";
-      button.type = "button";
-      button.textContent = city;
-      if (
-        selectedCities[country] &&
-        selectedCities[country].includes(city)
-      ) {
-        button.classList.add("selected");
-      }
-      button.addEventListener("click", function () {
-        toggleCity(
-          country,
-          city,
-          button
+    const grid =
+      document.createElement("div");
+    grid.className =
+      "city-grid";
+    Object.keys(cityData[country]).forEach(
+      function (city) {
+        const button =
+          document.createElement("button");
+        button.className =
+          "city-button";
+        button.type =
+          "button";
+        button.textContent =
+          city;
+        if (
+          selectedCities[country] &&
+          selectedCities[country].includes(city)
+        ) {
+          button.classList.add("selected");
+        }
+        button.addEventListener(
+          "click",
+          function () {
+            toggleCity(
+              country,
+              city,
+              button
+            );
+          }
         );
-      });
-      grid.appendChild(button);
-    });
+        grid.appendChild(button);
+      }
+    );
     section.appendChild(grid);
-    const selected = document.createElement("div");
-    selected.className = "selected-cities";
-    selected.id = "selected-" + country;
+    const selected =
+      document.createElement("div");
+    selected.className =
+      "selected-cities";
+    selected.id =
+      "selected-" + country;
     section.appendChild(selected);
     container.appendChild(section);
   });
@@ -189,10 +258,14 @@ function toggleCity(country, city, button) {
   if (!selectedCities[country]) {
     selectedCities[country] = [];
   }
-  if (selectedCities[country].includes(city)) {
+  if (
+    selectedCities[country].includes(city)
+  ) {
     selectedCities[country] =
       selectedCities[country].filter(
-        c => c !== city
+        function (c) {
+          return c !== city;
+        }
       );
     button.classList.remove("selected");
   } else {
@@ -206,7 +279,7 @@ function resetCountries() {
   selectedCities = {};
   document
     .querySelectorAll(".country-button")
-    .forEach(button => {
+    .forEach(function (button) {
       button.classList.remove("selected");
     });
   updateSelectedCountries();
@@ -220,7 +293,7 @@ function selectSeason(season) {
   selectedSeason = season;
   document
     .querySelectorAll(".season-button")
-    .forEach(button => {
+    .forEach(function (button) {
       button.classList.remove("selected");
     });
   const seasonWords = {
@@ -231,7 +304,7 @@ function selectSeason(season) {
   };
   document
     .querySelectorAll(".season-button")
-    .forEach(button => {
+    .forEach(function (button) {
       if (
         button.textContent.includes(
           seasonWords[season]
@@ -243,7 +316,8 @@ function selectSeason(season) {
   updateSeasonInfo();
 }
 function updateSeasonInfo() {
-  const element = document.getElementById("seasonInfo");
+  const element =
+    document.getElementById("seasonInfo");
   if (!element) return;
   if (!selectedSeason) {
     element.textContent =
@@ -256,8 +330,9 @@ function updateSeasonInfo() {
     return;
   }
   const blocks = [];
-  selectedCountries.forEach(country => {
-    const cities = selectedCities[country] || [];
+  selectedCountries.forEach(function (country) {
+    const cities =
+      selectedCities[country] || [];
     if (!cities.length) {
       blocks.push(
         "<strong>" +
@@ -267,7 +342,7 @@ function updateSeasonInfo() {
       );
       return;
     }
-    cities.forEach(city => {
+    cities.forEach(function (city) {
       let text = "";
       if (
         typeof seasonInfo !== "undefined" &&
@@ -275,7 +350,8 @@ function updateSeasonInfo() {
         seasonInfo[country][city]
       ) {
         text =
-          seasonInfo[country][city][selectedSeason];
+          seasonInfo[country][city]
+            [selectedSeason];
       }
       if (!text) {
         text =
@@ -309,10 +385,11 @@ function selectBudget(mode) {
   budgetMode = mode;
   document
     .querySelectorAll(".budget-button")
-    .forEach(button => {
+    .forEach(function (button) {
       button.classList.remove("selected");
     });
-  const input = document.getElementById("budgetInput");
+  const input =
+    document.getElementById("budgetInput");
   if (mode === "have") {
     const button =
       document.getElementById("budgetHave");
@@ -334,17 +411,6 @@ function selectBudget(mode) {
   }
 }
 /* =========================
-   ПРОВЕРКА ГОРОДА
-========================= */
-function validateDepartureCity(value) {
-  const city =
-    value
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g, " ");
-  return allowedDepartureCities.includes(city);
-}
-/* =========================
    СОЗДАНИЕ ПОЕЗДКИ
 ========================= */
 function createTrip() {
@@ -360,9 +426,15 @@ function createTrip() {
     daysElement
       ? Number(daysElement.value)
       : 0;
-  if (!validateDepartureCity(from)) {
+  if (!departureCountry) {
     alert(
-      "Укажи город отправления из списка."
+      "Сначала выбери страну отправления."
+    );
+    return;
+  }
+  if (!from) {
+    alert(
+      "Выбери город отправления."
     );
     return;
   }
@@ -372,7 +444,9 @@ function createTrip() {
     );
     return;
   }
-  for (const country of selectedCountries) {
+  for (
+    const country of selectedCountries
+  ) {
     if (
       !selectedCities[country] ||
       !selectedCities[country].length
@@ -441,7 +515,7 @@ function createRoute(days) {
   if (!route) return;
   route.innerHTML = "";
   selectedCountries.forEach(
-    (country, index) => {
+    function (country, index) {
       const block =
         document.createElement("div");
       block.className =
@@ -456,7 +530,8 @@ function createRoute(days) {
             country +
           "</strong>" +
           "<p>" +
-            selectedCities[country].join(" · ") +
+            selectedCities[country]
+              .join(" · ") +
           "</p>" +
         "</div>";
       route.appendChild(block);
@@ -471,9 +546,20 @@ function createRoute(days) {
       " " +
       getDayWord(days) +
       " · " +
+      fromDepartureText() +
+      " → " +
       selectedCountries.join(" → ") +
       ".";
   }
+}
+function fromDepartureText() {
+  const fromElement =
+    document.getElementById("from");
+  const city =
+    fromElement
+      ? fromElement.value
+      : "";
+  return city || departureCountry;
 }
 /* =========================
    СТОИМОСТЬ
@@ -485,30 +571,44 @@ function createCosts(days) {
     Object.values(selectedCities)
       .flat()
       .length;
-  const fromElement =
-    document.getElementById("from");
-  const from =
-    fromElement
-      ? fromElement.value.toLowerCase()
-      : "";
-  let flight;
-  if (from.includes("новосибирск")) {
+  let flight = 0;
+  if (departureCountry === "Россия") {
+    if (
+      document.getElementById("from").value ===
+      "Новосибирск"
+    ) {
+      flight =
+        countryCount === 1
+          ? 350
+          : 450;
+    } else {
+      flight =
+        countryCount === 1
+          ? 250
+          : 350;
+    }
+  } else if (
+    departureCountry === "Казахстан"
+  ) {
     flight =
       countryCount === 1
-        ? 350
-        : 450;
-  } else {
+        ? 220
+        : 320;
+  } else if (
+    departureCountry === "Беларусь"
+  ) {
     flight =
       countryCount === 1
         ? 180
         : 280;
   }
   let hotelPerNight = 0;
-  selectedCountries.forEach(country => {
-    selectedCities[country].forEach(city => {
-      hotelPerNight +=
-        cityData[country][city].price;
-    });
+  selectedCountries.forEach(function (country) {
+    selectedCities[country]
+      .forEach(function (city) {
+        hotelPerNight +=
+          cityData[country][city].price;
+      });
   });
   const hotel =
     cityCount > 0
@@ -542,7 +642,7 @@ function createCosts(days) {
     funCost: fun,
     totalCost: total
   };
-  Object.keys(elements).forEach(id => {
+  Object.keys(elements).forEach(function (id) {
     const element =
       document.getElementById(id);
     if (element) {
@@ -580,7 +680,7 @@ function createCountryPlan() {
     document.getElementById("countryPlan");
   if (!container) return;
   container.innerHTML = "";
-  selectedCountries.forEach(country => {
+  selectedCountries.forEach(function (country) {
     const countryBlock =
       document.createElement("div");
     countryBlock.className =
@@ -590,33 +690,35 @@ function createCountryPlan() {
     title.textContent =
       country;
     countryBlock.appendChild(title);
-    selectedCities[country].forEach(city => {
-      const item =
-        document.createElement("div");
-      item.className =
-        "city-plan-item";
-      let description = "";
-      if (
-        typeof seasonInfo !== "undefined" &&
-        seasonInfo[country] &&
-        seasonInfo[country][city]
-      ) {
-        description =
-          seasonInfo[country][city][selectedSeason] || "";
-      }
-      if (!description) {
-        description =
-          "Информация о сезоне пока недоступна.";
-      }
-      item.innerHTML =
-        "<strong>" +
-          city +
-        "</strong>" +
-        "<p>" +
-          description +
-        "</p>";
-      countryBlock.appendChild(item);
-    });
+    selectedCities[country]
+      .forEach(function (city) {
+        const item =
+          document.createElement("div");
+        item.className =
+          "city-plan-item";
+        let description = "";
+        if (
+          typeof seasonInfo !== "undefined" &&
+          seasonInfo[country] &&
+          seasonInfo[country][city]
+        ) {
+          description =
+            seasonInfo[country][city]
+              [selectedSeason] || "";
+        }
+        if (!description) {
+          description =
+            "Информация о сезоне пока недоступна.";
+        }
+        item.innerHTML =
+          "<strong>" +
+            city +
+          "</strong>" +
+          "<p>" +
+            description +
+          "</p>";
+        countryBlock.appendChild(item);
+      });
     container.appendChild(countryBlock);
   });
 }
