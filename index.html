@@ -1,573 +1,423 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Routelia — Plan your Europe</title>
-
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
 <div class="page">
-
   <nav class="nav">
-
     <div class="logo">
       routelia
     </div>
-
     <div class="nav-right">
-
       <button
         class="nav-button"
+        type="button"
         onclick="openPlanner()">
         Планировать
       </button>
-
       <button
         class="star-button"
+        type="button"
         onclick="toggleAssistant()">
         ★
       </button>
-
     </div>
-
   </nav>
-
-
   <main>
-
     <!-- ГЛАВНАЯ -->
-
     <section class="hero">
-
       <div class="eyebrow">
         Travel planning, made simple
       </div>
-
       <h1>
         Европа,<br>
         твой маршрут.
       </h1>
-
       <p class="hero-text">
         Routelia помогает собрать поездку по Европе —
         от маршрута и городов до бюджета и идей
         для путешествия.
       </p>
-
       <button
         class="main-button"
+        type="button"
         onclick="openPlanner()">
         Спланировать поездку →
       </button>
-
     </section>
-
-
     <!-- ПРЕИМУЩЕСТВА -->
-
     <section class="features">
-
       <div class="feature">
-
         <div class="feature-number">
           01
         </div>
-
         <h3>
           Маршрут
         </h3>
-
         <p>
           Выбери страны и конкретные города
           для одной поездки.
         </p>
-
       </div>
-
-
       <div class="feature">
-
         <div class="feature-number">
           02
         </div>
-
         <h3>
           Идеи
         </h3>
-
         <p>
           Места, города и впечатления
           под твоё путешествие.
         </p>
-
       </div>
-
-
       <div class="feature">
-
         <div class="feature-number">
           03
         </div>
-
         <h3>
           Бюджет
         </h3>
-
         <p>
           Получишь ориентировочную стоимость
           всей поездки.
         </p>
-
       </div>
-
     </section>
-
-
     <!-- ПЛАНИРОВЩИК -->
-
     <section
       class="planner"
       id="planner">
-
       <button
         class="back"
+        type="button"
         onclick="closePlanner()">
         ← Назад
       </button>
-
-
       <h2>
         Создай поездку
       </h2>
-
       <p class="planner-subtitle">
         Выбери страны и города — Routelia
         рассчитает примерный план поездки.
       </p>
-
-
       <!-- ОТКУДА -->
-
       <div class="field">
-
         <label>
-          Откуда
+          Страна отправления
         </label>
-
-        <input
-          id="from"
-          type="text"
-          placeholder="Например, Новосибирск">
-
+        <div class="departure-country-grid">
+          <button
+            class="departure-country-button"
+            type="button"
+            onclick="selectDepartureCountry(this,'Россия')">
+            🇷🇺 Россия
+          </button>
+          <button
+            class="departure-country-button"
+            type="button"
+            onclick="selectDepartureCountry(this,'Казахстан')">
+            🇰🇿 Казахстан
+          </button>
+          <button
+            class="departure-country-button"
+            type="button"
+            onclick="selectDepartureCountry(this,'Беларусь')">
+            🇧🇾 Беларусь
+          </button>
+        </div>
+        <div
+          id="departureCityBox"
+          class="departure-city-box">
+          <label>
+            Город отправления
+          </label>
+          <select
+            id="from"
+            disabled>
+            <option value="">
+              Сначала выбери страну
+            </option>
+          </select>
+        </div>
       </div>
-
-
       <!-- СТРАНЫ -->
-
       <div class="field">
-
         <label>
           Страны
         </label>
-
-
         <div class="country-grid">
-
           <button
             class="country-button"
+            type="button"
             onclick="toggleCountry(this,'Германия')">
             🇩🇪 Германия
           </button>
-
           <button
             class="country-button"
+            type="button"
             onclick="toggleCountry(this,'Франция')">
             🇫🇷 Франция
           </button>
-
           <button
             class="country-button"
+            type="button"
             onclick="toggleCountry(this,'Испания')">
             🇪🇸 Испания
           </button>
-
           <button
             class="country-button"
+            type="button"
             onclick="toggleCountry(this,'Италия')">
             🇮🇹 Италия
           </button>
-
           <button
             class="country-button"
+            type="button"
             onclick="toggleCountry(this,'Нидерланды')">
             🇳🇱 Нидерланды
           </button>
-
           <button
             class="country-button"
+            type="button"
             onclick="toggleCountry(this,'Австрия')">
             🇦🇹 Австрия
           </button>
-
           <button
             class="country-button"
+            type="button"
             onclick="toggleCountry(this,'Чехия')">
             🇨🇿 Чехия
           </button>
-
           <button
             class="country-button"
+            type="button"
             onclick="toggleCountry(this,'Португалия')">
             🇵🇹 Португалия
           </button>
-
           <button
             class="country-button"
+            type="button"
             onclick="toggleCountry(this,'Швейцария')">
             🇨🇭 Швейцария
           </button>
-
           <button
             class="country-button"
+            type="button"
             onclick="toggleCountry(this,'Бельгия')">
             🇧🇪 Бельгия
           </button>
-
         </div>
-
-
         <div
           id="selectedCountries"
           class="selected-countries">
           Сначала выбери страны
         </div>
-
-
         <div id="citySections"></div>
-
-
         <button
           id="resetCountries"
           class="reset-countries"
+          type="button"
           onclick="resetCountries()">
           Сбросить выбор
         </button>
-
       </div>
-
-
       <!-- ДНИ -->
-
       <div class="field">
-
         <label>
           Количество дней
         </label>
-
         <input
           id="days"
           type="number"
           min="1"
           max="90"
           placeholder="14">
-
       </div>
-
-
       <!-- СЕЗОН -->
-
       <div class="field">
-
         <label>
           Сезон
         </label>
-
-
         <div class="season-options">
-
           <button
             class="season-button"
+            type="button"
             onclick="selectSeason('spring')">
             🌸 Весна
           </button>
-
           <button
             class="season-button"
+            type="button"
             onclick="selectSeason('summer')">
             ☀️ Лето
           </button>
-
           <button
             class="season-button"
+            type="button"
             onclick="selectSeason('autumn')">
             🍂 Осень
           </button>
-
           <button
             class="season-button"
+            type="button"
             onclick="selectSeason('winter')">
             ❄️ Зима
           </button>
-
         </div>
-
-
         <div
           id="seasonInfo"
           class="season-info">
-
           Выбери сезон, чтобы увидеть
           особенности поездки.
-
         </div>
-
       </div>
-
-
       <!-- БЮДЖЕТ -->
-
       <div class="field">
-
         <label>
           Сколько планируете потратить?
         </label>
-
-
         <div class="budget-options">
-
           <button
             class="budget-button"
             id="budgetHave"
+            type="button"
             onclick="selectBudget('have')">
-
             💰 У меня есть бюджет
-
           </button>
-
-
           <button
             class="budget-button"
             id="budgetCalculate"
+            type="button"
             onclick="selectBudget('calculate')">
-
             🎯 Рассчитать примерную стоимость
-
           </button>
-
         </div>
-
-
         <div
           id="budgetInput"
           class="budget-input">
-
           <input
             id="budget"
             type="number"
             min="1"
             placeholder="Например, 1500">
-
-
           <div class="budget-note">
-
             Сумма в евро. Routelia сравнит её
             с примерной стоимостью маршрута.
-
           </div>
-
         </div>
-
       </div>
-
-
       <!-- СОЗДАТЬ -->
-
       <button
         class="planner-submit"
+        type="button"
         onclick="createTrip()">
-
         Создать маршрут
-
       </button>
-
     </section>
-
-
     <!-- РЕЗУЛЬТАТ -->
-
     <section
       class="result"
       id="result">
-
       <h2>
         Твой маршрут готов ✦
       </h2>
-
-
       <p id="resultText"></p>
-
-
       <div
         class="route"
         id="route">
       </div>
-
-
       <!-- СТОИМОСТЬ -->
-
       <div class="cost-box">
-
         <div class="cost-title">
           Ориентировочная стоимость поездки
         </div>
-
-
         <div
           class="cost"
           id="totalCost">
           €0
         </div>
-
-
         <div class="cost-breakdown">
-
-
           <div class="cost-row">
-
             <span>
               ✈️ Дорога до маршрута
             </span>
-
             <span id="flightCost"></span>
-
           </div>
-
-
           <div class="cost-row">
-
             <span>
               🏨 Проживание
             </span>
-
             <span id="hotelCost"></span>
-
           </div>
-
-
           <div class="cost-row">
-
             <span>
               🚆 Переезды и транспорт
             </span>
-
             <span id="transportCost"></span>
-
           </div>
-
-
           <div class="cost-row">
-
             <span>
               🍽️ Еда
             </span>
-
             <span id="foodCost"></span>
-
           </div>
-
-
           <div class="cost-row">
-
             <span>
               🎟️ Развлечения
             </span>
-
             <span id="funCost"></span>
-
           </div>
-
-
         </div>
-
-
         <div
           class="budget-result"
           id="budgetResult">
         </div>
-
       </div>
-
-
       <!-- ПЛАН ПО СТРАНАМ -->
-
       <div class="country-plan">
-
         <h3>
           План поездки
         </h3>
-
         <div id="countryPlan"></div>
-
       </div>
-
-
       <div class="disclaimer">
-
         Стоимость является ориентировочной оценкой.
         Она не является ценой бронирования и может
         изменяться в зависимости от дат, сезона,
         выбранного жилья и транспорта.
-
       </div>
-
     </section>
-
   </main>
-
-
   <footer>
     routelia © 2026
   </footer>
-
 </div>
-
-
 <!-- ASSISTANT -->
-
 <button
   class="assistant"
+  type="button"
   onclick="toggleAssistant()">
   ★
 </button>
-
-
 <div
   class="assistant-box"
   id="assistantBox">
-
   <div class="assistant-title">
     Routelia Assistant ★
   </div>
-
   <p>
     Привет! Я помогу тебе разобраться
     с поездкой, маршрутом и идеями
     для путешествия по Европе.
   </p>
-
 </div>
-
-
 <!-- JAVASCRIPT -->
-
 <script src="seasons.js"></script>
 <script src="script.js"></script>
-
 </body>
 </html>
